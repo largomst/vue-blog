@@ -8,8 +8,13 @@
         >{{ tag }}</span
       >
     </div>
-    <div class="px-0 py-1  text-3xl  text-gray-800 font-semibold">
-      {{ article.title }}
+    <div class="px-0 py-1">
+      <router-link
+        :to="{ name: 'ArticleDetail', params: { id: article.id } }"
+        class="text-3xl  text-gray-800 font-semibold"
+      >
+        {{ article.title }}
+      </router-link>
     </div>
     <div class="text-sm">{{ formatted_time(article.created) }}</div>
   </div>
