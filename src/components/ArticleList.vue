@@ -19,22 +19,27 @@
     <div class="text-sm">{{ formatted_time(article.created) }}</div>
   </div>
 
-  <div>
-    <span v-if="is_page_exists('prev')">
-      <router-link
-        :to="{ name: 'Home', query: { page: get_page_param('prev') } }"
-      >
-        Prev
-      </router-link>
-    </span>
-    <span>{{ get_page_param("current") }}</span>
-    <span v-if="is_page_exists('next')">
-      <router-link
-        :to="{ name: 'Home', query: { page: get_page_param('next') } }"
-      >
-        Next
-      </router-link>
-    </span>
+  <div class="absolute bottom-20 w-full flex justify-around">
+    <div>
+      <span v-if="is_page_exists('prev')">
+        <router-link
+          :to="{ name: 'Home', query: { page: get_page_param('prev') } }"
+          class=""
+        >
+          Prev
+        </router-link>
+      </span>
+      <span class="text-xl pl-3 pr-3 font-bold">{{
+        get_page_param("current")
+      }}</span>
+      <span v-if="is_page_exists('next')">
+        <router-link
+          :to="{ name: 'Home', query: { page: get_page_param('next') } }"
+        >
+          Next
+        </router-link>
+      </span>
+    </div>
   </div>
 </template>
 
