@@ -22,6 +22,9 @@
     </div>
   </div>
   <hr />
+  <div class="text-right pr-1 underline">
+    <router-link to="/login">登录</router-link>
+  </div>
 </template>
 
 <script>
