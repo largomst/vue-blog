@@ -21,21 +21,14 @@
 
   <div class="absolute bottom-20 w-full flex justify-around">
     <div>
-      <span v-if="is_page_exists('prev')">
-        <router-link
-          :to="{ name: 'Home', query: { page: get_page_param('prev') } }"
-          class=""
-        >
+      <span v-if="link.prev !== null">
+        <router-link :to="prev">
           Prev
         </router-link>
       </span>
-      <span class="text-xl pl-3 pr-3 font-bold">{{
-        get_page_param("current")
-      }}</span>
-      <span v-if="is_page_exists('next')">
-        <router-link
-          :to="{ name: 'Home', query: { page: get_page_param('next') } }"
-        >
+      <span class="text-xl pl-3 pr-3 font-bold">{{ $route.query.page }}</span>
+      <span v-if="link.next !== null">
+        <router-link :to="next">
           Next
         </router-link>
       </span>
@@ -51,6 +44,7 @@ export default {
     return {
       articles: "",
       link: { next: null, prev: null },
+      search: null,
     };
   },
   methods: {
@@ -62,6 +56,7 @@ export default {
       const nextPattern = /rel="next"/;
       const prevPattern = /rel="prev"/;
       const linkPattern = /(?<=<)(.*)(?=>)/;
+
       let links = [];
       if (link !== undefined) {
         links = link.split(",");
@@ -79,46 +74,71 @@ export default {
     },
     get_article_data() {
       let url = "/api/article/";
-      const page = Number(this.$route.query.page);
-      if (!isNaN(page) && page !== 0) {
-        url = url + "?page=" + page;
+
+      let params = new URLSearchParams();
+
+      let page = this.$route.query.page;
+      let search = this.$route.query.search;
+
+      if (page !== undefined && page !== null) {
+        params.append("page", this.$route.query.page);
       }
+      if (search !== undefined && search !== null) {
+        params.append("search", this.$route.query.search);
+      }
+
+      const paramsString = params.toString();
+
+      if (paramsString.charAt(0) !== "") {
+        url += "?" + paramsString;
+      }
+
       axios.get(url).then((response) => {
         this.articles = response.data;
         this.extract_prev_next_from_headers_link(response.headers.link);
       });
     },
-    is_page_exists(direction) {
-      if (direction == "next") {
-        return this.link.next !== null;
-      } else {
-        return this.link.prev !== null;
-      }
+    get_page(link) {
+      return new URL(link).searchParams.get("page");
     },
-    get_page_param(direction) {
-      try {
-        let url_string;
-        switch (direction) {
-          case "next":
-            url_string = this.link.next;
-            break;
-          case "prev":
-            url_string = this.link.prev;
-            break;
-          default:
-            return this.$route.query.page;
-        }
-        const url = new URL(url_string);
-        console.log(url.searchParams.get("page"));
-        return url.searchParams.get("page");
-      } catch (err) {
-        console.log(err);
-        return;
-      }
+    get_search() {
+      this.search =
+        this.$route.query.search === undefined
+          ? null
+          : this.$route.query.search;
     },
   },
   mounted() {
     this.get_article_data();
+    this.get_search();
+  },
+  computed: {
+    prev() {
+      let data = { name: "Home" };
+      if (this.search) {
+        data = { ...data, query: { search: this.search } };
+      }
+      if (this.link.prev) {
+        data = {
+          ...data,
+          query: { ...data.query, page: this.get_page(this.link.prev) },
+        };
+      }
+      return data;
+    },
+    next() {
+      let data = { name: "Home" };
+      if (this.search) {
+        data = { ...data, query: { search: this.search } };
+      }
+      if (this.link.next) {
+        data = {
+          ...data,
+          query: { ...data.query, page: this.get_page(this.link.next) },
+        };
+      }
+      return data;
+    },
   },
   watch: {
     $route() {
