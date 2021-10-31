@@ -114,9 +114,9 @@ export default {
   },
   computed: {
     prev() {
-      let data = { name: "Home" };
+      let data = { name: "Home", query: {} };
       if (this.search) {
-        data = { ...data, query: { search: this.search } };
+        data = { ...data, query: { ...data.query, search: this.search } };
       }
       if (this.link.prev) {
         data = {
@@ -127,9 +127,9 @@ export default {
       return data;
     },
     next() {
-      let data = { name: "Home" };
+      let data = { name: "Home", query: {} };
       if (this.search) {
-        data = { ...data, query: { search: this.search } };
+        data = { ...data, query: { ...data.query, search: this.search } };
       }
       if (this.link.next) {
         data = {
