@@ -69,7 +69,6 @@ export default {
             this.link.prev = str.match(linkPattern)[0];
           }
         });
-        // console.log(this.link);
       }
     },
     get_article_data() {
@@ -80,10 +79,10 @@ export default {
       let page = this.$route.query.page;
       let search = this.$route.query.search;
 
-      if (page !== undefined && page !== null) {
+      if (page) {
         params.append("page", this.$route.query.page);
       }
-      if (search !== undefined && search !== null) {
+      if (search) {
         params.append("search", this.$route.query.search);
       }
 

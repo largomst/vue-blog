@@ -1,6 +1,6 @@
 <template>
   <BlogHeader />
-  <div class="mt-8">
+  <div class="mt-8 grid grid-cols-2">
     <div>
       <h3 class="text-center font-semibold text-xl">注册账号</h3>
       <form class="text-center" action="">
@@ -28,7 +28,22 @@
       </form>
     </div>
     <div>
-      <!-- 用户登陆 -->
+      <div>
+        <h3 class="text-center font-semibold text-xl">登录账号</h3>
+        <form class="text-center" action="">
+          <div class="p-3">
+            <span>账号</span>
+            <input type="text" />
+          </div>
+          <div class="p-3">
+            <span>密码</span>
+            <input type="password" />
+          </div>
+          <div>
+            <button @click.prevent="signin" class="btn">提交</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <BlogFooter />
@@ -66,11 +81,29 @@ export default {
           alert(e.message);
         });
     },
+    signin() {
+      const that = this;
+      axios
+        .post("api/token/", {
+          username: this.signupName,
+          password: this.signuPwd,
+        })
+        .then((response) => {
+          console.log("signin");
+          const storage = localStorage;
+          const expiredTime = Date.parse(response.headers.date) + 60000;
+          storage.setItem("access.blog", response.data.access);
+          storage.setItem("refresh.blog", response.data.refresh);
+          storage.setItem("expiredTime.blog", expiredTime);
+          storage.setItem("username.blog", that.signupName);
+          that.$router.push({ name: "Home" });
+        });
+    },
   },
 };
 </script>
 <style scoped>
-.form-elem {
+input {
   @apply h-7 p-2 ml-4 border-2 border-gray-400 outline-none;
 }
 .btn {
