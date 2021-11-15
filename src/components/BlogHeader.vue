@@ -11,7 +11,7 @@
     <div>
       <div v-if="hasLogin" class="text-right pr-1 underline">
         <Menu>
-          <MenuButton>{{ username }}</MenuButton>
+          <MenuButton>{{ name }}</MenuButton>
           <MenuItems>
             <MenuItem v-slot="{ active }">
               <router-link
@@ -42,6 +42,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
 export default {
   name: "BlogHeader",
+  props: ["welcomeName"],
   data() {
     return {
       username: "",
@@ -69,6 +70,11 @@ export default {
       storage.removeItem("expiredTime.blog");
       this.hasLogin = false;
       this.$router.push("/");
+    },
+  },
+  computed: {
+    name() {
+      return this.welcomeName !== undefined ? this.welcomeName : this.username;
     },
   },
 };

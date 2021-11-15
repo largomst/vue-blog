@@ -1,5 +1,5 @@
 <template>
-  <blog-header />
+  <blog-header :welcomeName="welcomeName" />
   <div>
     <h3>更新资料</h3>
     <form action="">
@@ -30,6 +30,7 @@ export default {
       username: "",
       password: "",
       token: "",
+      welcomeName: "",
     };
   },
   mounted() {
@@ -67,6 +68,7 @@ export default {
               name: "UserCenter",
               params: { username: name },
             });
+            that.welcomeName = name;
           });
       });
     },
