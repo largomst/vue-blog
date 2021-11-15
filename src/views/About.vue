@@ -16,7 +16,9 @@
         <div
           class="md:col-start-1 md:col-end-3 board bg-gradient-to-r from-green-400 to-blue-500 p-4"
         >
-          <h3 class="uppercase tracking-widest font-semibold text-white">
+          <h3
+            class="uppercase tracking-widest font-semibold text-white text-xs"
+          >
             BIOGRAPHY
           </h3>
           <h1 class="font-semibold text-white text-3xl tracking-wider">
@@ -32,7 +34,7 @@
           class="md:col-start-3 md:col-end-4 board bg-opacity-10 bg-cat bg-cover p-4"
         >
           <p class="text-gray-100 leading-6 text-sm ">
-            它是我爸和我晚上在路边散步捡到的流浪小猫，如今在我家打工
+            它是我爸和我晚上在路边散步捡到的小猫，如今在我家打工和晒太阳。
           </p>
         </div>
         <div class=" md:col-start-1 md:col-end-2 board p-4">
