@@ -33,11 +33,11 @@
         <form class="text-center" action="">
           <div class="p-3">
             <span>账号</span>
-            <input type="text" />
+            <input type="text" v-model="signinName" />
           </div>
           <div class="p-3">
             <span>密码</span>
-            <input type="password" />
+            <input type="password" v-model="signPwd" />
           </div>
           <div>
             <button @click.prevent="signin" class="btn">提交</button>
@@ -63,6 +63,8 @@ export default {
       signupName: "",
       signuPwd: "",
       signupResponse: null,
+      signinName: "",
+      signinPwd: "",
     };
   },
   methods: {
@@ -85,8 +87,8 @@ export default {
       const that = this;
       axios
         .post("api/token/", {
-          username: this.signupName,
-          password: this.signuPwd,
+          username: this.signinName,
+          password: this.signinPwd,
         })
         .then((response) => {
           console.log("signin");
