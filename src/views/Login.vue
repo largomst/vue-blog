@@ -96,7 +96,7 @@ export default {
           storage.setItem("access.blog", response.data.access);
           storage.setItem("refresh.blog", response.data.refresh);
           storage.setItem("expiredTime.blog", expiredTime);
-          storage.setItem("username.blog", that.signupName);
+          storage.setItem("username.blog", that.signinName);
           that.$router.push({ name: "Home" });
         })
         .catch(() => {
