@@ -16,7 +16,7 @@
         <div class="p-3">
           <span>密码</span>
           <input
-            v-model="signuPwd"
+            v-model="signupPwd"
             class="form-elem"
             type="password"
             placeholder="输入密码"
@@ -37,7 +37,7 @@
           </div>
           <div class="p-3">
             <span>密码</span>
-            <input type="password" v-model="signPwd" />
+            <input type="password" v-model="signinPwd" />
           </div>
           <div>
             <button @click.prevent="signin" class="btn">提交</button>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       signupName: "",
-      signuPwd: "",
+      signupPwd: "",
       signupResponse: null,
       signinName: "",
       signinPwd: "",
@@ -72,8 +72,8 @@ export default {
       const that = this;
       axios
         .post("/api/user/", {
-          username: this.signupName,
-          password: this.signuPwd,
+          username: that.signupName,
+          password: that.signupPwd,
         })
         .then((response) => {
           that.signupResponse = response.data;
@@ -87,8 +87,8 @@ export default {
       const that = this;
       axios
         .post("api/token/", {
-          username: this.signinName,
-          password: this.signinPwd,
+          username: that.signinName,
+          password: that.signinPwd,
         })
         .then((response) => {
           const storage = localStorage;
