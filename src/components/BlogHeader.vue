@@ -21,9 +21,9 @@
               >
             </MenuItem>
             <MenuItem v-slot="{ active }">
-              <a :class="{ 'bg-blue-200': active }" href="#">
+              <div @click="logout" :class="{ 'bg-blue-200': active }" href="#">
                 Logout
-              </a>
+              </div>
             </MenuItem>
           </MenuItems>
         </Menu>
@@ -59,6 +59,17 @@ export default {
     authorization().then((data) => {
       [this.hasLogin, this.username] = data;
     });
+  },
+  methods: {
+    logout() {
+      const storage = localStorage;
+      storage.removeItem("access.blog");
+      storage.removeItem("refresh.blog");
+      storage.removeItem("username.blog");
+      storage.removeItem("expiredTime.blog");
+      this.hasLogin = false;
+      this.$router.push("/");
+    },
   },
 };
 </script>
