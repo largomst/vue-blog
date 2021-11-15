@@ -91,7 +91,6 @@ export default {
           password: this.signinPwd,
         })
         .then((response) => {
-          console.log("signin");
           const storage = localStorage;
           const expiredTime = Date.parse(response.headers.date) + 60000;
           storage.setItem("access.blog", response.data.access);
@@ -99,6 +98,9 @@ export default {
           storage.setItem("expiredTime.blog", expiredTime);
           storage.setItem("username.blog", that.signupName);
           that.$router.push({ name: "Home" });
+        })
+        .catch(() => {
+          alert("用户名或密码错误");
         });
     },
   },
